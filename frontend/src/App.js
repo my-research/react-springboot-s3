@@ -7,7 +7,7 @@ import { DropzoneArea } from "material-ui-dropzone";
 const App = () => {
 
   const [files, setFiles] = useState([]);
-
+  const [url, setUrl] = useState("");
   const handleUploadFiles = (files) => {
     setFiles([...files, files]);
   };
@@ -21,11 +21,12 @@ const App = () => {
       }
       const formData = new FormData();
       files.map(file => formData.append("images", file));
-      const data = await axios.post(
+      const { data } = await axios.post(
         "http://localhost:8000/api/v1/files",
         formData,
         { headers });
-      console.log(data);
+      const url = data.url;
+      setUrl(url);
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +39,10 @@ const App = () => {
       </div>
       <br /> <br /> <br /><br /> <br /> <br />
       <button onClick={handleSubmitButtonClick}>서버로 전송</button>
+      <br /> <br /> <br /><br /> <br /> <br />
+      <div style={{ width: "30%" }}>
+        <img style={{ width: "30px" }} src={url} />
+      </div>
     </S.Conatiner>
   );
 }
