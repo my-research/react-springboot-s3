@@ -18,10 +18,7 @@ public class FileController {
     private final S3Uploader s3Uploader;
 
     @PostMapping
-    public ResponseEntity<Dto> uploadFile(List<MultipartFile> images) throws Exception {
-
-        String resUrl = s3Uploader.upload(images.get(0), "static");
-
-        return ResponseEntity.ok(new Dto(resUrl));
+    public ResponseEntity<List<Dto>> uploadFile(List<MultipartFile> images) throws Exception {
+        return ResponseEntity.ok(s3Uploader.upload(images, "static"));
     }
 }
