@@ -14,16 +14,22 @@ const App = () => {
 
   const handleSubmitButtonClick = async () => {
     console.log(files.length);
+    const req = {
+      id: 1,
+      username: "",
+      address: "hello"
+    }
     try {
-
       const headers = {
         'Content-type': 'multipart/form-data',
       }
       const formData = new FormData();
       files.map(file => formData.append("images", file));
+      formData.append("body", "jang");
       const { data } = await axios.post(
         "http://localhost:8000/api/v1/files",
         formData,
+
         { headers });
       const url = data.url;
       setUrl(url);
